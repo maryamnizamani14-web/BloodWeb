@@ -127,6 +127,10 @@ td button {
 
 td button:hover {
   background: #922b21;
+
+}
+#formMessage {
+  font-weight: bold;
 }
 /* Responsive */
 @media(max-width:768px){
