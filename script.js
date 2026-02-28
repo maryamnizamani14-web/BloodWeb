@@ -1,6 +1,5 @@
-// 1️⃣ Load donors from localStorage OR default list
 let donors = JSON.parse(localStorage.getItem("donors")) || [
-  {name:"Ali Khan", group:"A+", city:"Karachi", contact:"03001234567"},
+  {name:"Hafsa khan", group:"A+", city:"Karachi", contact:"03001234567"},
   {name:"Sara Ahmed", group:"O-", city:"Lahore", contact:"03111234567"},
   {name:"Ahmed Raza", group:"B+", city:"Islamabad", contact:"03211234567"},
   {name:"Fatima Noor", group:"AB-", city:"Karachi", contact:"03331234567"},
@@ -9,26 +8,24 @@ let donors = JSON.parse(localStorage.getItem("donors")) || [
   {name:"Hassan Tariq", group:"B-", city:"Multan", contact:"03671234567"},
   {name:"Zainab Khan", group:"AB+", city:"Karachi", contact:"03781234567"},
   {name:"Bilal Ahmed", group:"O-", city:"Lahore", contact:"03891234567"},
-  {name:"Mariam Ali", group:"A+", city:"Islamabad", contact:"03901234567"}
+  {name:"Fatima khan", group:"A+", city:"Islamabad", contact:"03901234567"}
 ];
 
-
-// 2️⃣ Save to localStorage
+// 2️⃣ Save donors
 function saveToStorage(){
   localStorage.setItem("donors", JSON.stringify(donors));
 }
 
-
-// 3️⃣ DISPLAY DONORS FUNCTION (Add here 👇)
+// 3️⃣ Display donors
 function displayDonors(data){
   const table = document.querySelector("#donorTable tbody");
   table.innerHTML = "";
 
-  data.forEach((donor, index) => {
+  data.forEach(donor => {
     const row = document.createElement("tr");
 
     if(donor.group.includes("-")){
-      row.classList.add("rare");
+      row.classList.add("rare"); // optional highlight rare
     }
 
     row.innerHTML = `
@@ -36,7 +33,7 @@ function displayDonors(data){
       <td>${donor.group}</td>
       <td>${donor.city}</td>
       <td>${donor.contact}</td>
-      <td><button onclick="deleteDonor(${index})">Delete</button></td>
+      <td></td> <!-- No Delete -->
     `;
 
     table.appendChild(row);
@@ -45,18 +42,7 @@ function displayDonors(data){
   updateStats();
 }
 
-
-// 4️⃣ DELETE FUNCTION
-function deleteDonor(index){
-  if(confirm("Are you sure you want to delete this donor?")){
-    donors.splice(index, 1);
-    saveToStorage();
-    displayDonors(donors);
-  }
-}
-
-
-// 5️⃣ FILTER FUNCTION
+// 4️⃣ Filter donors
 function filterDonors(){
   const blood = document.getElementById("bloodFilter").value;
   const city = document.getElementById("citySearch").value.toLowerCase();
@@ -69,15 +55,34 @@ function filterDonors(){
   displayDonors(filtered);
 }
 
-
-// 6️⃣ STATS FUNCTION
+// 5️⃣ Update stats
 function updateStats(){
   document.getElementById("totalDonors").innerText = donors.length;
-
   const rareCount = donors.filter(d => d.group.includes("-")).length;
   document.getElementById("rareDonors").innerText = rareCount;
 }
 
+// 6️⃣ Add new donor
+document.getElementById("donorForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const name = document.getElementById("dName").value.trim();
+  const group = document.getElementById("dGroup").value;
+  const city = document.getElementById("dCity").value.trim();
+  const contact = document.getElementById("dContact").value.trim();
 
-// 7️⃣ Show donors when page loads
-displayDonors(donors);
+  if(!/^[0-9]{11}$/.test(contact)){
+    alert("Phone number must be 11 digits!");
+    return;
+  }
+
+  const newDonor = {name, group, city, contact};
+  donors.push(newDonor);
+  saveToStorage();
+  displayDonors(donors);
+  this.reset();
+});
+
+// 7️⃣ Initialize page
+window.onload = function(){
+  displayDonors(donors);
+};

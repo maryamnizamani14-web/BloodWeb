@@ -10,7 +10,7 @@
   <h2>LifeLine Connect</h2>
   <nav>
     <a href="index.html">Home</a>
-      <a href="about.html">About</a>
+    <a href="about.html">About</a>
     <a href="donors.html">Donor Directory</a>
     <a href="emergency.html">Emergency Request</a>
     <a href="contact.html">Contact</a>
@@ -20,6 +20,7 @@
 <div class="container">
   <h2>Donor Directory</h2>
 
+  <!-- Filters -->
   <select id="bloodFilter">
     <option value="">Filter by Blood Group</option>
     <option>A+</option><option>A-</option>
@@ -29,46 +30,45 @@
   </select>
 
   <input type="text" id="citySearch" placeholder="Search by City">
-
   <button onclick="filterDonors()">Search</button>
-  <div style="margin:20px 0; background:#ecf0f1; padding:15px;">
-  <h3>Statistics</h3>
-  <p>Total Donors: <span id="totalDonors"></span></p>
-  <p>Rare Blood Donors: <span id="rareDonors"></span></p>
-</div>
 
-  <table id="donorTable">
+  <!-- Statistics -->
+  <div style="margin:20px 0; background:#ecf0f1; padding:15px;">
+    <h3>Statistics</h3>
+    <p>Total Donors: <span id="totalDonors"></span></p>
+    <p>Rare Blood Donors: <span id="rareDonors"></span></p>
+  </div>
+
+  <!-- Donor Table -->
+  <table id="donorTable" border="1" cellspacing="0" cellpadding="10">
     <thead>
       <tr>
         <th>Name</th>
         <th>Blood Group</th>
         <th>City</th>
         <th>Contact</th>
-        <th>Action</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
+
+  <!-- Add Donor Form -->
+  <h3 style="margin-top:30px;">Add New Donor</h3>
+  <form id="donorForm">
+    <input type="text" id="dName" placeholder="Full Name" required>
+    <select id="dGroup" required>
+      <option value="">Select Blood Group</option>
+      <option>A+</option><option>A-</option>
+      <option>B+</option><option>B-</option>
+      <option>O+</option><option>O-</option>
+      <option>AB+</option><option>AB-</option>
+    </select>
+    <input type="text" id="dCity" placeholder="City" required>
+    <input type="text" id="dContact" placeholder="Contact Number" required>
+    <button type="submit">Add Donor</button>
+  </form>
+
 </div>
-
-<h3>Add New Donor</h3>
-
-<form id="donorForm">
-  <input type="text" id="dName" placeholder="Full Name" required>
-
-  <select id="dGroup" required>
-    <option value="">Select Blood Group</option>
-    <option>A+</option><option>A-</option>
-    <option>B+</option><option>B-</option>
-    <option>O+</option><option>O-</option>
-    <option>AB+</option><option>AB-</option>
-  </select>
-
-  <input type="text" id="dCity" placeholder="City" required>
-  <input type="text" id="dContact" placeholder="Contact Number" required>
-
-  <button type="submit">Add Donor</button>
-</form>
 
 <footer>© 2026 LifeLine Connect</footer>
 
